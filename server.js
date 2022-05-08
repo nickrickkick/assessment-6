@@ -22,7 +22,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
-    const htmlFilePath = path.resolve(__dirname, '..', 'public', 'index.html');
+    const htmlFilePath = path.resolve(__dirname, 'public', 'index.html');
   
     res.sendFile(htmlFilePath);
   });
