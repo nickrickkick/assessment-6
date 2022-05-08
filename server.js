@@ -4,6 +4,15 @@ const app = express()
 const cors = require('cors')
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
+var Rollbar = require("rollbar");
+var rollbar = new Rollbar({
+  accessToken: '43d7cb8a9e9e4e31a0a8e97f42304920',
+  captureUncaught: true,
+  captureUnhandledRejections: true
+});
+
+// record a generic message and send it to Rollbar
+rollbar.log("Hello world!");
 
 app.use(express.json())
 app.use(cors())
@@ -20,6 +29,7 @@ app.get('/api/robots', (req, res) => {
         res.status(200).send(botsArr)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
+        rollbar.error(error)
         res.sendStatus(400)
     }
 })
@@ -29,9 +39,11 @@ app.get('/api/robots/five', (req, res) => {
         let shuffled = shuffleArray(bots)
         let choices = shuffled.slice(0, 5)
         let compDuo = shuffled.slice(6, 8)
+        rollbar.log(captureIp)
         res.status(200).send({choices, compDuo})
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
+        rollbar.error(error)
         res.sendStatus(400)
     }
 })
@@ -63,6 +75,7 @@ app.post('/api/duel', (req, res) => {
         }
     } catch (error) {
         console.log('ERROR DUELING', error)
+        rollbar.error(error)
         res.sendStatus(400)
     }
 })
@@ -72,6 +85,7 @@ app.get('/api/player', (req, res) => {
         res.status(200).send(playerRecord)
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
+        rollbar.error(error)
         res.sendStatus(400)
     }
 })
