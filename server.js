@@ -95,7 +95,7 @@ app.get('/api/player', (req, res) => {
     }
 })
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     const htmlFilePath = path.resolve(__dirname, '..', 'public', 'index.html');
   
     res.sendFile(htmlFilePath);
