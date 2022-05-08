@@ -21,11 +21,6 @@ rollbar.log("Hello world!");
 app.use(express.json())
 app.use(cors())
 
-app.get('/', (req, res) => {
-    const htmlFilePath = path.resolve(__dirname, 'public', 'index.html');
-  
-    res.sendFile(htmlFilePath);
-  });
 
 app.get('/js', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.js'))
@@ -100,6 +95,12 @@ app.get('/api/player', (req, res) => {
         res.sendStatus(400)
     }
 })
+
+app.get('*', (req, res) => {
+    const htmlFilePath = path.resolve(__dirname, 'public', 'index.html');
+  
+    res.sendFile(htmlFilePath);
+  });
 
 
 //const port = process.env.PORT || 3000
