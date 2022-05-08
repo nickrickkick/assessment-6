@@ -16,6 +16,7 @@ rollbar.log("Hello world!");
 
 app.use(express.json())
 app.use(cors())
+
 app.get('/js', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.js'))
   })
